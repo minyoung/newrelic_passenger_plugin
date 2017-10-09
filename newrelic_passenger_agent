@@ -48,6 +48,7 @@ module PassengerAgent
       report_metric "passenger.processes.running", "Processes", @status_parser.processes_running
       report_metric("passenger.processes.active", "Processes", @status_parser.processes_active) if passenger_version.eql?(3)
       report_metric "passenger.queue.waiting", "Requests", @status_parser.queue_waiting
+      report_metric("passenger.queue.requests", "Requests", @status_parser.queued_requests) if [4, 5].include?(passenger_version)
       report_metric "passenger.sessions.total", "Sessions", @status_parser.sessions_total
     end
 

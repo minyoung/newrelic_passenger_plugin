@@ -19,6 +19,8 @@ class PassengerStatusParser
     @matches[:queue_waiting] = /Waiting on global queue:\s+(\d+)/ if @passenger_version.eql?(3)
     #Requests in top-level queue : 0
     @matches[:queue_waiting] = /Requests in top-level queue\s+:\s+(\d+)/ if [4,5].include? @passenger_version
+
+    @matches[:queued_requests] = /Requests in queue:\s+(\d+)/ if [4,5].include? @passenger_version
   end
 
 
@@ -44,6 +46,10 @@ class PassengerStatusParser
   def queue_waiting
     match = output_to_parse.match(@matches[:queue_waiting])
     match[1]
+  end
+
+  def queued_requests
+    output_to_parse.match(@matches[:queued_requests])[1]
   end
 
   def sessions_total
